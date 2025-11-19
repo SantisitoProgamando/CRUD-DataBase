@@ -68,10 +68,34 @@ namespace CRUD_DB
             }
             catch (Exception ex) { throw new Exception("Error al guardar clientes" + ex.Message); }
         }
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!int.TryParse(Interaction.InputBox("Ingrese el ID a eliminar"), out int IdEliminar))
+                {
+                    throw new Exception("Ingrese un ID valido a eliminar");
+                }
+                _repo.Eliminar(IdEliminar);
+                CargarClientes();
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
+        private void btnEliminarSeleccionando_Click(object sender, EventArgs e)
+        {
+
+            if (dgvClientes.CurrentCell != null)
+            {
+                int fila = dgvClientes.CurrentCell.RowIndex;
+                int id = Convert.ToInt32(dgvClientes.Rows[fila].Cells[0].Value);
+                _repo.Eliminar(id);
+                CargarClientes();
+            }
+        }
     }
 }

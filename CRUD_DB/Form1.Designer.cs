@@ -38,6 +38,7 @@
             btnGuardar = new Button();
             label1 = new Label();
             dgvPrevClientes = new DataGridView();
+            btnEliminarSeleccionando = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvPrevClientes).BeginInit();
             SuspendLayout();
@@ -72,7 +73,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvClientes.RowHeadersWidth = 51;
-            dgvClientes.Size = new Size(582, 340);
+            dgvClientes.Size = new Size(712, 340);
             dgvClientes.TabIndex = 0;
             // 
             // btnAgregar
@@ -93,6 +94,7 @@
             btnEliminar.TabIndex = 2;
             btnEliminar.Text = "Eliminar cliente";
             btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // btnModificar
             // 
@@ -130,11 +132,22 @@
             dgvPrevClientes.Size = new Size(297, 177);
             dgvPrevClientes.TabIndex = 6;
             // 
+            // btnEliminarSeleccionando
+            // 
+            btnEliminarSeleccionando.Location = new Point(293, 502);
+            btnEliminarSeleccionando.Name = "btnEliminarSeleccionando";
+            btnEliminarSeleccionando.Size = new Size(215, 42);
+            btnEliminarSeleccionando.TabIndex = 7;
+            btnEliminarSeleccionando.Text = "Eliminar Seleccionando";
+            btnEliminarSeleccionando.UseVisualStyleBackColor = true;
+            btnEliminarSeleccionando.Click += btnEliminarSeleccionando_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1208, 562);
+            Controls.Add(btnEliminarSeleccionando);
             Controls.Add(dgvPrevClientes);
             Controls.Add(label1);
             Controls.Add(btnGuardar);
@@ -160,5 +173,6 @@
         private Button btnGuardar;
         private Label label1;
         private DataGridView dgvPrevClientes;
+        private Button btnEliminarSeleccionando;
     }
 }
