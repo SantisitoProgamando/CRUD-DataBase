@@ -6,8 +6,7 @@ namespace CRUD_DB
 {
     public partial class Form1 : Form
     {
-        private readonly RepositorioCliente _repo;
-        private Cliente _ClienteSeleccionado;
+        private readonly RepositorioCliente _repo; // _repo va a servir para llamar a las funciones del repositorio
 
         private readonly BindingList<Cliente> _clientesPendientes = new();
         public Form1()
@@ -16,12 +15,14 @@ namespace CRUD_DB
             _repo = new RepositorioCliente();
 
             dgvPrevClientes.AutoGenerateColumns = true;
-            dgvPrevClientes.DataSource = _clientesPendientes;
+            dgvPrevClientes.DataSource = _clientesPendientes; // Al iniciar el form, se muestra en el datagridview los clientes que hay en la base de datos
 
             CargarClientes();
         }
         private Cliente PrevClienteSeleccionado => dgvPrevClientes.CurrentRow?.DataBoundItem as Cliente;
+        // Cliente seleccionado de la grilla previa a la base de datos
         private Cliente ClienteSeleccionado => dgvClientes.CurrentRow?.DataBoundItem as Cliente;
+        // Cliente seleccionado de la grilla de la base de datos
         private void CargarClientes()
         {
             List<Cliente> clientes = _repo.ObtenerClientes();

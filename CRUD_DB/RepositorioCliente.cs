@@ -10,6 +10,9 @@ using Microsoft.Data.SqlClient;
 
 namespace ClientesApp
 {
+    /// <summary>
+    /// La base de datos esta agregada en app.config en connectionString
+    /// </summary>
     public class Cliente
     {
         public int ID { get; set; } // Primary key
@@ -25,15 +28,19 @@ namespace ClientesApp
             _connectionString = ConfigurationManager
                                                     .ConnectionStrings["ConexionClientes"]
                                                     .ConnectionString;
+            // Aca se declara que conexion va a tener el ConfigurationManager, en este caso va a ser "ConexionClientes"
         }
         private SqlConnection GetConnection()
         {
-            return new SqlConnection(_connectionString);
+            return new SqlConnection(_connectionString); // GetConnection SIEMPRE va a dar como resultado la base de datos
+                                                         // Esto es util para no tener que reescribir siempre lo mismo y solo
+                                                         // LLamar a esta funcion
         }
         public List<Cliente> ObtenerClientes()
         {
             var lista = new List<Cliente>();
-            using (var conn = GetConnection())
+            using (var conn = GetConnection()) // Aca se puede observar como conn toma la connectionstring de la funcion
+                                               // Simplificando el codigo para que sea mas legible
             {
                 conn.Open();
                 string query = "SELECT Id, Nombre, Apellido, Email FROM Clientes";
@@ -50,6 +57,7 @@ namespace ClientesApp
                             Email = reader.IsDBNull(3) ? null : reader.GetString(3)
                         };
                         lista.Add(c);
+                        // No se usa conn.Close()  (O sea cerrar la base de datos) porque USING ya lo cierra de por si
                     }
                 }
             }
