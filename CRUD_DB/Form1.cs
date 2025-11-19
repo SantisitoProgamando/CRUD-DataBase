@@ -21,6 +21,7 @@ namespace CRUD_DB
             CargarClientes();
         }
         private Cliente PrevClienteSeleccionado => dgvPrevClientes.CurrentRow?.DataBoundItem as Cliente;
+        private Cliente ClienteSeleccionado => dgvClientes.CurrentRow?.DataBoundItem as Cliente;
         private void CargarClientes()
         {
             List<Cliente> clientes = _repo.ObtenerClientes();
@@ -84,17 +85,43 @@ namespace CRUD_DB
         private void btnEliminarSeleccionando_Click(object sender, EventArgs e)
         {
 
-            if (dgvClientes.CurrentCell != null)
+            var cliente = ClienteSeleccionado;
+            if (cliente == null)
             {
-                int fila = dgvClientes.CurrentCell.RowIndex;
-                int id = Convert.ToInt32(dgvClientes.Rows[fila].Cells[0].Value);
-                _repo.Eliminar(id);
+                MessageBox.Show("Seleccione un cliente"); return;
+            }
+            var confirmar = MessageBox.Show($"Seguro que queres eliminar a {cliente.Nombre} {cliente.Apellido}?", 
+                "Confirmar eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmar == DialogResult.Yes)
+            {
+                _repo.Eliminar(cliente.ID);
                 CargarClientes();
             }
+
         }
         private void btnModificar_Click(object sender, EventArgs e)
         {
-
+            var cliente = ClienteSeleccionado;
+            if (cliente == null)
+            {
+                MessageBox.Show("Tiene que ingresar un cliente");
+                return;
+            }
+            string nuevoNombre = Interaction.InputBox("Ingrese nuevo nombre", "Modificar cliente", cliente.Nombre);
+            if (string.IsNullOrEmpty(nuevoNombre)) { return; }
+            string nuevoApellido = Interaction.InputBox("Ingrese nuevo apellido", "Modificar cliente", cliente.Apellido);
+            if (string.IsNullOrEmpty(nuevoApellido)) { return; }
+            string nuevoEmail = Interaction.InputBox("Ingrese nuevo email", "Modificar cliente", cliente.Email);
+            if (string.IsNullOrEmpty(nuevoEmail)) { return; }
+            var clientemodificado = new Cliente
+            {
+                ID = cliente.ID,
+                Nombre = nuevoNombre,
+                Apellido = nuevoApellido,
+                Email = nuevoEmail
+            };
+            _repo.Modificar(clientemodificado);
+            CargarClientes();
         }
         private void Form1_Load(object sender, EventArgs e)
         {

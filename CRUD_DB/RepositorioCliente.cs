@@ -77,10 +77,10 @@ namespace ClientesApp
             {
                 conn.Open();
                 string query = @"UPDATE Clientes
-                                                SET Nombre = @Nombre
-                                                SET Apellido = @Apellido
-                                                SET Email = @Email
-                                            WHERE Id = @Id";
+                                                SET Nombre = @Nombre,
+                                                    Apellido = @Apellido,
+                                                    Email = @Email
+                                            WHERE Id = @Id;";
                 using (var cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Nombre", c.Nombre);
