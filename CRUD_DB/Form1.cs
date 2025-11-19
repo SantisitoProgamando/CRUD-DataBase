@@ -81,11 +81,6 @@ namespace CRUD_DB
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnEliminarSeleccionando_Click(object sender, EventArgs e)
         {
 
@@ -95,6 +90,30 @@ namespace CRUD_DB
                 int id = Convert.ToInt32(dgvClientes.Rows[fila].Cells[0].Value);
                 _repo.Eliminar(id);
                 CargarClientes();
+            }
+        }
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEliminarClientePrevio_Click(object sender, EventArgs e)
+        {
+            var seleccionado = PrevClienteSeleccionado;
+            if (seleccionado == null)
+            {
+                MessageBox.Show("Seleccione un cliente pendiente en la grilla");
+                return;
+            }
+            var confirmado = MessageBox.Show("Seguro que quiere eliminar a este cliente pendiente?",
+                "Confirmar eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmado == DialogResult.Yes)
+            {
+                _clientesPendientes.Remove(seleccionado);
             }
         }
     }
